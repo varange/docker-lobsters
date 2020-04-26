@@ -60,7 +60,7 @@ trap "echo 'Stopping Lobsters - pid: $pid'; kill -SIGTERM $pid" SIGINT SIGTERM
 while : ; do
   echo "Running cron jobs."
   bundle exec ruby script/mail_new_activity.rb
-  bundle exec ruby script/post_to_twitter
+  #bundle exec ruby script/post_to_twitter
   sleep 300
 done &
 

@@ -1,30 +1,34 @@
-version: '2.1'
+version: '3'
 
 services:
-  proxy:
-    image: jwilder/nginx-proxy
+  # Ingress service
+  ingress:
+    image: nginx:alpine
+    restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./docker-assets/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./docker-assets/nginx/ssl/:/etc/nginx/ssl/
+
   database:
     image: mariadb
+    env_file:
+      - .env
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=lobsters
-    healthcheck:
-      test: "/usr/bin/mysql --user=root --password=password --execute \"SHOW DATABASES;\""
-      timeout: 5s
-      retries: 20
+      - MYSQL_DATABASE=lobsters_development
     volumes:
       - 'lobsters_database:/var/lib/mysql'
   app:
-    image: utensils/lobsters:latest
+    image: varange/lobsters:latest
     build:
       context: .
       args:
         DEVELOPER_BUILD: "false"
+    env_file:
+      - .env
     environment:
       - MARIADB_HOST=database
       - MARIADB_PORT=3306
@@ -36,14 +40,11 @@ services:
       - LOBSTER_HOSTNAME=localhost
       - VIRTUAL_HOST=localhost
       - RAILS_MAX_THREADS=5
-    ports:
-      - "3000:3000"
-    depends_on:
-      database:
-        condition: service_healthy
-      proxy:
-        condition: service_started
+
+networks:
+  default:
+    external:
+      name: lobsters-net
 
 volumes:
   lobsters_database:
-    driver: local

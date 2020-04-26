@@ -1,8 +1,8 @@
 #!/usr/bin/make -f
 
 SHELL                   := /usr/bin/env bash
-REPO_NAMESPACE          ?= utensils
-REPO_USERNAME           ?= jamesbrink
+REPO_NAMESPACE          ?= varange
+REPO_USERNAME           ?= varange
 REPO_API_URL            ?= https://hub.docker.com/v2
 IMAGE_NAME              ?= lobsters
 BASE_IMAGE              ?= ruby:2.3-alpine
@@ -70,3 +70,20 @@ update-micro-badge:
 .PHONY: clean
 clean:
 	docker rmi $$(docker images $(REPO_NAMESPACE)/$(IMAGE_NAME) --format="{{.Repository}}:{{.Tag}}") --force
+
+# Start server
+.PHONY: up
+up:
+	-docker network create lobsters-net
+	docker-compose up -d
+
+# Shutdown server
+.PHONY: down
+down:
+	docker-compose down
+
+# Pull latest lobster image, only run this command on server
+.PHONY: update
+update:
+	docker-compose pull
+	docker-compose up -d

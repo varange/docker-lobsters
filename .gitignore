@@ -52,3 +52,9 @@ build-iPhoneSimulator/
 docker-assets/config/certs/*
 !docker-assers/config/certs/.keep
 .DS_Store
+
+# Contains secrets
+.env
+/docker-assets/nginx/ssl/key.pem
+/docker-assets/nginx/ssl/cert.pem
+/docker-assets/nginx/conf.d/production.conf
