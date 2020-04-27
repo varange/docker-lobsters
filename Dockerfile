@@ -47,7 +47,7 @@ RUN set -xe; \
     cd /lobsters; \
     su lobsters -c "gem install bundler --user-install"; \
     su lobsters -c "gem update"; \
-    su lobsters -c "gem install rake -v 12.3.2"; \
+    su lobsters -c "gem install rake -v 13.0.1"; \
     su lobsters -c "bundle install --no-cache"; \
     su lobsters -c "bundle add puma --version '~> 3.12.1'"; \
     if [ "${DEVELOPER_BUILD,,}" != "true" ]; \
