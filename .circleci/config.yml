@@ -3,6 +3,9 @@ jobs:
   build:
     docker:
       - image: docker:stable-git
+    branches:
+      only:
+        - master
     steps:
       - checkout
       - setup_remote_docker
@@ -29,8 +32,3 @@ jobs:
           name: Push Docker Image
           command: |
             make push
-            make push-readme
-      - run:
-          name: Update MicroBadger
-          command: |
-            make update-micro-badge
