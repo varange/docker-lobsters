@@ -20,10 +20,6 @@ services:
       - 'lobsters_database:/var/lib/mysql'
   app:
     image: varange/lobsters:latest
-    build:
-      context: .
-      args:
-        DEVELOPER_BUILD: "false"
     env_file:
       - .env
 
