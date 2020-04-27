@@ -16,9 +16,6 @@ services:
     image: mariadb
     env_file:
       - .env
-    environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=lobsters_development
     volumes:
       - 'lobsters_database:/var/lib/mysql'
   app:
@@ -29,17 +26,6 @@ services:
         DEVELOPER_BUILD: "false"
     env_file:
       - .env
-    environment:
-      - MARIADB_HOST=database
-      - MARIADB_PORT=3306
-      - MARIADB_PASSWORD=password
-      - MARIADB_USER=root
-      - LOBSTER_DATABASE=lobsters
-      - LOBSTER_SITE_NAME="Example News"
-      - RAILS_ENV=development
-      - LOBSTER_HOSTNAME=localhost
-      - VIRTUAL_HOST=localhost
-      - RAILS_MAX_THREADS=5
 
 networks:
   default:
