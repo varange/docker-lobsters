@@ -22,6 +22,8 @@ services:
     image: varange/lobsters:latest
     env_file:
       - .env
+    depends_on:
+      - database
 
 networks:
   default:
