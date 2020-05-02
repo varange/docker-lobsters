@@ -10,8 +10,6 @@
 /test/version_tmp/
 /tmp/
 
-.aws/*
-
 # Used by dotenv library to load environment variables.
 # .env
 
