@@ -11,12 +11,6 @@ services:
     volumes:
       - ./docker-assets/nginx/conf.d/:/etc/nginx/conf.d/
       - ./docker-assets/nginx/ssl/:/etc/nginx/ssl/
-    logging:
-        driver: awslogs
-        options:
-            awslogs-region: us-east-1
-            awslogs-group: imperium
-            awslogs-stream: nginx
 
   database:
     image: mariadb
