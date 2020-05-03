@@ -3,7 +3,7 @@ version: '3'
 services:
   # Ingress service
   ingress:
-    image: nginx:alpine
+    image: nginx:1-alpine
     restart: unless-stopped
     ports:
       - 80:80
@@ -13,15 +13,28 @@ services:
       - ./docker-assets/nginx/ssl/:/etc/nginx/ssl/
 
   database:
-    image: mariadb
+    image: mariadb:10.5
+    restart: unless-stopped
     env_file:
       - .env
     volumes:
       - 'lobsters_database:/var/lib/mysql'
-  app:
+
+  forums:
     image: varange/lobsters:latest
+    restart: unless-stopped
     env_file:
       - .env
+    depends_on:
+      - database
+
+  wordpress:
+    image: wordpress:5-php7.2-fpm
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - wordpress:/var/www/html
     depends_on:
       - database
 
@@ -32,3 +45,4 @@ networks:
 
 volumes:
   lobsters_database:
+  wordpress:
