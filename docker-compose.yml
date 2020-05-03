@@ -11,7 +11,7 @@ services:
     volumes:
       - ./docker-assets/nginx/conf.d/:/etc/nginx/conf.d/
       - ./docker-assets/nginx/ssl/:/etc/nginx/ssl/
-      - wordpress:/var/www/wordpress
+      - wordpress:/var/www/html
 
   database:
     image: mariadb:10.5
